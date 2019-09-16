@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <div class="card col-sm-6 ml-4 mt-3">
+      <div class="card-body">
+          
+              
+                        <!-- <div class="card" style="width: 30rem;"> -->
+                      
+                         <div class="card-body">
+                           <!-- <h4 class="card-title"> {{ department }}</h4> -->
+                           <h3 class="card-title"> {{ department.department_name }}</h3>
+                           <p class="card-text"> <small>HOD: {{ department.hod_name }}</small><br>
+                              <small> Tel: {{ department.hod_phone_number }}</small><br>
+                              <small> Email: {{ department.hod_email }}</small><br><br></p> 
+                              
+                          </div>
+                <!-- </div><br> -->
+          </div>
+
+      </div>
+    
+      Tel: {{ department.hod_phone_number }}
+
+      <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-2">
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.project_title }}</h5>
+                            <p class="card-text">{{ project.project_description }}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+ {% endblock %}
