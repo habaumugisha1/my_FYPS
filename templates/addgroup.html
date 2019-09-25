@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+  {% load widget_tweaks %}
+    {% block content %}
+
+    
+    <div class="col-sm-4 mr-4 mt-3 mb-4" style="margin-left: 25%">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Add group</h5>
+
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+            
+                {% for field in form %}
+                  <div class="form-group">
+                    {{ field.label_tag }}
+            
+                    {% render_field field class="form-control" %}
+            
+                    {% if field.help_text %}
+                      <small class="form-text text-muted">
+                        {{ field.help_text }}
+                      </small>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+            
+                <button type="submit" class="btn btn-success">Add</button>
+              </form>
+                <!-- <form>
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">upload excel format groups and remember ordered well</label>
+                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                  </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% endblock %}

@@ -10,27 +10,11 @@
 background-color: rgb(185, 241, 222);
 transform: scale(1.1)
 } */
-.cont {
+.carousel-inner {
     position: relative;
     display:flex;
     left: 0;
     top: 0;
     width: 100%;
     height: 70vh;
-    animation: slide 16s ease-in-out infinite;
-    background-size: cover;
-  }
-  @keyframes slide{
-      0%,100%{
-          background-image: url(../images/students.jpg);
-      }
-      25%{
-          background-image: url(../images/building.jpg);
-      }
-      50%{
-          background-image: url(../images/urstudent.jpg);
-      }
-      75%{
-          background-image: url(../images/ur-img.jpeg);
-      }
   }

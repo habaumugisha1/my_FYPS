@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+#from django.contrib.auth.models import AbstractBaseUser
+
 
 # Create your models here.
 class Department(models.Model):
@@ -29,9 +31,9 @@ class Group(models.Model):
         return self.group_name
 
 class Member(models.Model):
-    reg_number = models.IntegerField(unique=True)
+    reg_number = models.IntegerField()
     group_id = models.ForeignKey(Group, related_name='member', on_delete = models.CASCADE)
-    member_name = models.ForeignKey(User, related_name='member', on_delete = models.CASCADE)
+    member_name = models.ForeignKey(User, related_name='member',on_delete = models.CASCADE)
     department_name = models.ForeignKey(Department, related_name='member', on_delete = models.CASCADE)
     member_phone_number = models.IntegerField()
     member_email = models.CharField(max_length=250)
@@ -61,4 +63,18 @@ class Progress(models.Model):
 
 
 
+class Userprofile(models.Model):
+    user = models.OneToOneField(User, on_delete= models.CASCADE)
 
+    reg_number = models.IntegerField(primary_key=True)
+    user_names = models.CharField(max_length=250)
+    department_name = models.CharField(max_length=250)
+    email = models.EmailField( verbose_name='email address', max_length=255, unique=True)
+    active = models.BooleanField(default=True)
+    staff = models.BooleanField(default=False) # a admin user; non super-user
+    admin = models.BooleanField(default=False)
+    student = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.user_name
+     # a superuser

@@ -21,6 +21,9 @@ urlpatterns = [
     path('', views.homepage, name='home'),
     path('departments/', views.departmentPage, name='departments'),
     path('departments/<int:pk>/', views.department_details, name='department_details'),
+    path('group/<int:pk>/', views.singleGroup, name='single_group'),
+    path('add_group', views.create_group, name='add_group'),
+    path('student_register', views.userRegisterpage, name='register_students'),
     path('add_department/', views.addDepartmentPage, name='add_departments'),
     path('add_department_form_submission/', views.adddepartmentformsubmission, name='add_department_form_submission'),
  
