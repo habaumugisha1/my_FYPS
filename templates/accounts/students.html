@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="col-sm-4 mr-4 mt-3 mb-4 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Register User Here</h5>
+            
+             <form method="post" novalidate>
+              {% csrf_token %}
+                {% include 'includes/form.html' %}
+                
+                 <button type="submit" class="btn btn-success">Registor</button>
+              </form>  
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+{% endblock %}

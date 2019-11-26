@@ -1,0 +1,31 @@
+{% extends 'bases/dashboard.html' %}
+{% load static %}  
+        {% block content %}
+<h2>This is a list of Files available</h2>
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">File name</th>
+                    <th scope="col">files</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                        {% for file in files %}
+                  <tr>
+                    <th scope="row">{{file.id}}</th>
+                    <td>{{file.file_name}}</td>
+                    <td>
+                        <a href="{{ url }}"> {{file.file}}</a>
+                        </td>
+                  </tr>
+                  {% endfor %}
+            
+                </tbody>
+              </table>
+        
+       
+      
+      {% endblock %}
+   

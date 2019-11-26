@@ -2,7 +2,7 @@
 
 {% block content %}
  
-<a href="{% url 'register_students' %}" class="btn btn-secondary">register_students here</a>
+<a href="{% url 'register_students' %}" class="btn btn-secondary" style="margin-left: 45%; margin-top:15px">register_students here</a>
 
 <div class="card-deck mt-3 ml-3 mr-3">
   <div class="card ml-0 mr-0">
@@ -27,7 +27,7 @@
           {% endfor %}
         </tbody>
       </table><br>
-      <a href="#" class="btn btn-info btn-sm">Add supervisor</a>
+      <a href="{% url 'addsupervisor' %}" class="btn btn-info btn-sm">Add supervisor</a>
 
     </div>
   </div>
@@ -108,7 +108,7 @@
               {% endfor %}
             </tbody>
           </table><br>
-          <a href="#" class="btn btn-info btn-sm">Add Projects</a>
+          <a href="{% url 'addProject' %}" class="btn btn-info btn-sm">Add Projects</a>
       
     </div>
   </div>

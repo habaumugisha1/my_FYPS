@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Department, Supervisor, Group, Member,  Project, Userprofile
+from .models import Department, Supervisor, Group, Member, Message, Project, Userprofile, Files
 from import_export.admin import ImportExportModelAdmin
-@admin.register(Department, Supervisor, Group, Member,  Project, Userprofile)
+@admin.register(Department, Supervisor, Group, Member, Message, Project, Userprofile, Files)
 class ViewAdmin(ImportExportModelAdmin):
     pass
 

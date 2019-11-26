@@ -1,0 +1,90 @@
+{% extends 'bases/dashboard.html' %}
+{% load static %}
+	{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+		<!-- Sidebar - -->
+		<nav class ="bg-secondary text-white ml-15" id="sidebar" style="width: 200px; background : green; height:91vh; padding:20px; float: right; margin-left:500px">
+				<nav id="sidebar">
+						<div class="sidebar-header">
+							<h3>Bootstrap Sidebar</h3>
+						</div>
+				
+						<ul class="list-unstyled components">
+							<p>Dummy Heading</p>
+							<li class="active">
+								<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white">Home</a>
+								<ul class="collapse list-unstyled" id="homeSubmenu">
+									<li>
+										<a href="#">Home 1</a>
+									</li>
+									<li>
+										<a href="#">Home 2</a>
+									</li>
+									<li>
+										<a href="#">Home 3</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#" class="text-white">About</a>
+							</li>
+							<li>
+								<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+								<ul class="collapse list-unstyled text-white" id="pageSubmenu">
+									<li>
+										<a href="#" class="text-white">Page 1</a>
+									</li>
+									<li>
+										<a href="#" class="text-white">Page 2</a>
+									</li>
+									<li>
+										<a href="#" class="text-white">Page 3</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#"class="text-white" >Portfolio</a>
+							</li>
+							<li>
+								<a href="#" class="text-white">Contact</a>
+							</li>
+						</ul>
+					</nav>
+		</nav>
+	
+		<!-- Page Content -->
+		<div id="content">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+					<div class="container-fluid">
+			
+						<button type="button" id="sidebarCollapse" class="btn btn-info">
+							<i class="fas fa-align-left"></i>
+							<span>Toggle Sidebar</span>
+						</button>
+			
+					</div>
+				</nav>
+			</div>
+	
+	</div> 
+
+{% for project in projects %}
+<div class="card mr-5 mt-4 mb-4 ml-5">
+		
+		<div class="card-body">
+		  <h5 class="card-title mx-auto">{{project.project_title}}</h5>
+		  <p class="card-text">{{project.project_description}}</p>
+		  
+		</div>
+	  </div>
+
+
+
+{% endfor %}
+
+{% endblock %}

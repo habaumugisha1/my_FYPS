@@ -21,11 +21,13 @@ class Supervisor(models.Model):
     def __str__(self):
         return self.supervisor_name
 
+
 class Group(models.Model):
     department_id = models.ForeignKey(Department, related_name='group', on_delete = models.CASCADE)
     supervisor_id = models.ForeignKey(Supervisor, related_name='group', on_delete = models.CASCADE)
     group_name = models.CharField(max_length=50)
     group_email = models.CharField(max_length=250)
+    group_members = models.ForeignKey(User, related_name='group', on_delete= models.CASCADE, default=10)
 
     def __str__(self):
         return self.group_name
@@ -39,23 +41,27 @@ class Member(models.Model):
     member_email = models.CharField(max_length=250)
 
     def __str__(self):
-        return self.member_name
+        return self.member_email
+
+
 
 class Project(models.Model):
     group_id = models.ForeignKey(Group, related_name='project', on_delete = models.CASCADE)
     project_title = models.CharField(max_length=500)
-    project_description = models.CharField(max_length=200)
+    project_description = models.TextField(max_length=10000)
 
     def __str__(self):
         return self.project_title
 
 class Message(models.Model):
     message_content = models.CharField(max_length=300)
-
+    def __str__(self):
+        return self.message_content
 
 class Files(models.Model):
-    message_id: models.ForeignKey(Message, related_name='file', on_delete = models.CASCADE)
+    message_id = models.ForeignKey(Message, related_name='file', on_delete = models.CASCADE, default=1)
     file_name = models.CharField(max_length=200)
+    file = models.FileField(null=False, default='not uploaded')
 
 class Progress(models.Model):
     file_id = models.ForeignKey(Files, related_name='progress', on_delete = models.CASCADE)
@@ -76,5 +82,5 @@ class Userprofile(models.Model):
     student = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.user_name
+        return self.user_names
      # a superuser

@@ -15,15 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from accounts import views as accounts_views
+
 from depart import views
 
 urlpatterns = [
     path('', views.homepage, name='home'),
     path('departments/', views.departmentPage, name='departments'),
     path('departments/<int:pk>/', views.department_details, name='department_details'),
+    path('addSupervisor/', views.addSupervisor, name='addsupervisor'),
+    path('addProject/', views.addProject, name='addProject'),
     path('group/<int:pk>/', views.singleGroup, name='single_group'),
-    path('add_group', views.create_group, name='add_group'),
-    path('student_register', views.userRegisterpage, name='register_students'),
+    path('group/<int:pk>/upload/', views.upload_file, name='upload_file'),
+    path('group/<int:pk>/files/', views.file_list, name='file_list'),
+    path('add_group/', views.create_group, name='add_group'),
+    path('student_register/', accounts_views.userRegisterpage, name='register_students'),
+    #path('login/', accounts_views.login, name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('add_department/', views.addDepartmentPage, name='add_departments'),
     path('add_department_form_submission/', views.adddepartmentformsubmission, name='add_department_form_submission'),
  

@@ -1,0 +1,33 @@
+{% extends 'bases/addprojectbase.html' %}
+{% load widget_tweaks %}
+{% load static %}  
+        {% block content %}
+        
+        <div class="card ml-12 mt-5" style="width: 24rem;">
+                <div class="card-body">
+                  
+                  <form method="POST" action="" enctype="multipart/form_data">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Add supervisor in deprtment</label>
+                        {% csrf_token %}
+                        {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                      {% endfor %}
+                  
+                      {% for field in form.visible_fields %}
+                        <div class="form-group">
+                          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                          {{ field|add_class:'form-control' }}
+                          {% for error in field.errors %}
+                            <span class="help-block">{{ error }}</span>
+                          {% endfor %}
+                        </div>
+                      {% endfor %}
+                  
+                    <button type="submit" class="btn btn-success">Add</button>
+                  </div>
+                </form> 
+                </div>
+              </div>  
+      
+      {% endblock %}
