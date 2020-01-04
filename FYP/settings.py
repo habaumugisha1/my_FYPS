@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'habajeunes@gmail.com'
+EMAIL_HOST_PASSWORD = '1234567890'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True 
+
 
 # Application definition
 
@@ -41,6 +47,8 @@ INSTALLED_APPS = [
     'depart',
     'import_export',
     'accounts',
+    'channels',
+    'chat'
     
 ]
 
@@ -73,6 +81,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'FYP.wsgi.application'
+ASGI_APPLICATION = 'FYP.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -128,5 +145,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 LOGOUT_REDIRECT_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
+# LOGIN_REDIRECT_URL = 'dashboard'
+
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'

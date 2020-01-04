@@ -2,17 +2,40 @@
   {% load widget_tweaks %}
     {% block content %}
 
+    {% if messages %}
+    <div id="messages"
+      style="width: 80%; height: fit-content; color: rgb(226, 38, 5); background: rgb(245, 135, 108); margin-top: 10px; margin-left: 25px; padding: 20px; text-align: center; border-radius: 10px;">
+      {% for message in messages %}
+      {% if message.tags %} {% endif %} {{ message }}
+      {% endfor %}
+    </div>
+    {% endif %}
     
     <div class="col-sm-4 mr-4 mt-3 mb-4" style="margin-left: 25%">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Add group</h5>
+            <h5 class="card-title">create group</h5>
 
 
             <form method="post" novalidate>
                 {% csrf_token %}
             
-                {% for field in form %}
+                <div class="form-group">
+                  {% for hidden in form.hidden_fields %}
+                  {{ hidden }}
+                  {% endfor %}
+                
+                  {% for field in form.visible_fields %}
+                  <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control' }}
+                    {% for error in field.errors %}
+                    <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endfor %}
+                </div>
+                <!-- {% for field in form %}
                   <div class="form-group">
                     {{ field.label_tag }}
             
@@ -24,16 +47,12 @@
                       </small>
                     {% endif %}
                   </div>
-                {% endfor %}
+                {% endfor %} -->
             
-                <button type="submit" class="btn btn-success">Add</button>
+                <button type="submit" class="btn btn-success">create group</button> 
+                <!-- <a href="{% url 'dashboard' %}" class="btn btn-primary">Back to dashboard</a> -->
               </form>
-                <!-- <form>
-                    <div class="form-group">
-                      <label for="exampleFormControlFile1">upload excel format groups and remember ordered well</label>
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                  </form> -->
+                
           </div>
         </div>
       </div>

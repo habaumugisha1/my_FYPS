@@ -7,11 +7,22 @@
 {% endblock %} -->
 
 {% block content %}
+
+{% if messages %}
+<div id="messages"
+  style="width: 80%; height: fit-content; color: rgb(39, 217, 241); background: rgb(174, 238, 235); margin-top: 10px; margin-left: 75px; padding: 20px; text-align: center; border-radius: 10px;">
+  {% for message in messages %}
+  {% if message.tags %} {% endif %} {{ message }}
+  {% endfor %}
+</div>
+{% endif %}
+
   <div class="row justify-content-center mt-5">
     <div class="col-lg-4 col-md-6 col-sm-8">
       <div class="card">
         <div class="card-body">
           <h3 class="card-title">Log in</h3>
+
           <form method="post" novalidate>
             {% csrf_token %}
             {% include 'includes/form.html' %}
@@ -19,7 +30,8 @@
           </form>
         </div>
         <div class="card-footer text-muted text-center">
-          New to Django Boards? <a href="{% url 'register_students' %}">Sign up</a>
+          If you don't have account  <a href="{% url 'register_students' %}">contact</a> <a href="{% url 'home' %}" class="btn btn-warning"><< cansel</a>
+
         </div>
       </div>
       <div class="text-center py-2">

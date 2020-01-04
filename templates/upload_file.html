@@ -1,14 +1,22 @@
-{% extends 'bases/dashboard.html' %}
+{% extends 'bases/filebase.html' %}
 {% load widget_tweaks %}
 {% load static %}  
         {% block content %}
+        <!-- <nav aria-label="breadcrumb"
+          style="margin-left: 250px; margin-right: 150px; color: #0784F3; padding: 20px; margin-top: -48%;">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active " style="text-align: center; color: #0784F3; margin-left: 30%; font-size: 30px;">
+              Upload files in Your Group:
+              <b>{{group.group_name}}</b></li>
+          </ol>
+        </nav> -->
         
-        <div class="card ml-12 mt-5" style="width: 24rem;">
+        <h2 style="text-align: center; margin-top: 15px; font-family: 'Peralta', cursive; font-size: 35px; ">Upload files to your Group: <b>{{group.group_name}}</b></h2>
+        <div class="card ml-12 mt-5" style="width: 24rem; margin-left: 30%;">
                 <div class="card-body">
-                  
-                  <form method="POST" action="" enctype="multipart/form_data">
+                  <form method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="exampleFormControlFile1">upload Your file Here</label>
+                        <!-- <label for="exampleFormControlFile1">upload Your file Here</label> -->
                         {% csrf_token %}
                         {% for hidden in form.hidden_fields %}
                         {{ hidden }}

@@ -1,38 +1,48 @@
-{% extends 'bases/dashboard.html' %}
-{% load widget_tweaks %}
-{% load static %}
+{% extends 'base.html' %}
 
-        {% block content %}
-        
-        <div class="card mx-auto mb-5 p-2 " style="width: 24rem; margin-top: -90vh">
-                <div class="card-body">
-                        <div class="card-header">
-                                <label for="exampleFormControlFile1">Add project in deprtment</label>  
-                              </div>
-                  
-                  <form method="POST" action="" enctype="multipart/form_data">
-                    <div class="form-group">
-                       
-                        {% csrf_token %}
-                        {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                      {% endfor %}
-                  
-                      {% for field in form.visible_fields %}
-                        <div class="form-group">
-                          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                          {{ field|add_class:'form-control' }}
-                          {% for error in field.errors %}
-                            <span class="help-block">{{ error }}</span>
-                          {% endfor %}
-                        </div>
-                      {% endfor %}
-                  
-                    <button type="submit" class="btn btn-success">Add</button>
-                  </div>
-                
-                </form> 
-                </div>
-              </div>  
-      
-      {% endblock %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<h2 style="padding-top: 30px; text-align: center;">Upload your Project.</h2>
+<hr>
+{% if messages %}
+<div id="messages"
+  style="width: 80%; height: fit-content; color: green; background: lightgreen; margin-top: 10px; margin-left: 25px; padding: 20px; text-align: center; border-radius: 10px;">
+  {% for message in messages %}
+  {% if message.tags %} {% endif %} {{ message }}
+  {% endfor %}
+</div>
+{% endif %}
+
+
+
+<div class="add-school"
+  style="width: 30%; padding: 10px; border: 1px solid rgb(87, 86, 86); border-radius: 12px; margin-left: 30%; float: center; margin-top: 40px; margin-right: 10%; margin-bottom: 30px;">
+
+  <form method="POST">
+    {% csrf_token %}
+    <!-- {{ form }} -->
+    <div class="form-group">
+      {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+      {% endfor %}
+
+      {% for field in form.visible_fields %}
+      <div class="form-group">
+
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field|add_class:'form-control' }}
+        {% for error in field.errors %}
+        <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Upload</button>
+  </form>
+</div>
+
+{% endblock %}

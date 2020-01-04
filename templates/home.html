@@ -1,9 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'indexbase.html' %}
 {% load static %}  
         {% block content %}
+
+        <div class="banner alertPulse-css">
+          Nyarugenge campus
+        </div>
+
+        
+        
+        <div class="hey"
+          style="max-width: 80%; text-align: center; padding:20px;  position: absolute; bottom:0; float: bottom; height: 200px; color: white; margin-left: 100px; border-radius: 15px; font-size: 20px;">
+          <h2 style="font-size: 40px; margin-top: 50px; font-weight: bolder;">
+            Welcome to University of Rwanda Final Year Project Supervision.
+          </h2>
+        
+        </div>
+        
         
          
-        <div class="bd-example mt-4"  style="height: 70vh; width: 80%; margin-left: 10%">
+        <!-- <div class="bd-example mt-4"  style="height: 70vh; width: 80%; margin-left: 10%">
           <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">max-
               max-
@@ -64,8 +79,8 @@
               <p class="card-text">The student who are in process of writting projects' book and projects' implementations
                 they submit all of those on this platform like : books and the link of hosted systems implementation.
               </p>
-              <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-              <h3>{{ Project.project_name }}</h3>
+               <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              <!-- <h3>{{ Project.project_name }}</h3>
             </div>
           </div>
         </div>
@@ -73,13 +88,13 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Annoucements</h5>
-              <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-              <a href="#" class="btn btn-link">The project will be submited on..</a>
+               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+              <!-- <a href="#" class="btn btn-link">The project will be submited on..</a>
               <a href="#" class="btn btn-link">The deadline of submiting</br> the first chapter project</a>
             </div>
           </div>
         </div>
-      </div>
+      </div>   -->
       
       {% endblock %}
    

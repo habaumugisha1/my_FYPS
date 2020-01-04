@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+{% block content %}
+
+{% if messages %}
+<div id="messages"
+    style="width: 80%; height: fit-content; color: green; background: lightgreen; margin-top: 10px; margin-left: 25px; padding: 20px; text-align: center; border-radius: 10px;">
+    {% for message in messages %}
+    {% if message.tags %} {% endif %} {{ messages }}
+    {% endfor %}
+</div>
+{% endif %}
+<div class="col-sm-4 mr-4 mt-3 mb-4 mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Register staff Here</h5>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% include 'includes/form.html' %}
+
+                <button type="submit" class="btn btn-success">Registor</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'dashboardbase/lecture.html' %}
+
+{% block content %}
+<nav class="bg-dark text-white" id="sidebar"
+    style="width: 180px; margin-top: 0px; position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
+    <div class="bg-dark text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <h8> Department : {{user.profile.department_name}}</h8><br>
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
+
+    </ul>
+
+</nav>
+<h2>this lecture dashboard</h2>
+
+{% for store in stores %}
+
+<div class="card" style="padding-top: 20px; position: relative; float: right; width: 70%; margin-right: 25px; margin-top: -110vh;">
+    <div class="card-header text-center">
+       <strong> {{store.project}}</strong>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{store.supervisor}}</h5>
+        <p class="card-text">{{ store.description }}</p>
+        
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

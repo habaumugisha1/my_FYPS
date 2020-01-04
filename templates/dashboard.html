@@ -1,4 +1,5 @@
 {% extends 'bases/dashboard.html' %}
+{% load widget_tweaks %}
 {% load static %}
 	{% block stylesheet %}
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -8,83 +9,89 @@
 <div class="wrapper">
 
 		<!-- Sidebar - -->
-		<nav class ="bg-secondary text-white ml-15" id="sidebar" style="width: 200px; background : green; height:91vh; padding:20px; float: right; margin-left:500px">
-				<nav id="sidebar">
-						<div class="sidebar-header">
-							<h3>Bootstrap Sidebar</h3>
+		<nav class ="bg-dark text-white fixed-left" id="sidebar" style="width: 100px; margin-top: 50px; height:fit-content; padding:20px; margin-bottom: 40px;">
+						<div class="bg-dark text-white">
+							<h5>Thanks {{ user.first_name }}</h5>
+							<h6> Your email : {{user.email}}</h6>
+							<h8>  Department : {{user.profile.department_name}}</h8><br>
+							<h8> You are {{user.profile.role}}</h8>
 						</div>
+						<hr class="bg-white" />
 				
-						<ul class="list-unstyled components">
-							<p>Dummy Heading</p>
-							<li class="active">
-								<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white">Home</a>
-								<ul class="collapse list-unstyled" id="homeSubmenu">
-									<li>
-										<a href="#">Home 1</a>
-									</li>
-									<li>
-										<a href="#">Home 2</a>
-									</li>
-									<li>
-										<a href="#">Home 3</a>
-									</li>
-								</ul>
+					    <!-- <ul class="list-unstyled components tabs" style="margin-bottom: 40px;">
+							
+							<li class="active">								
+							 <a href="#" class=" text-black">Chat with group</a>								
+							</li>
+							
+							
+							<li>
+								<a href="#" class="text-black">fils uplaoded</a>
+							</li>
+							
+							<li>
+							<a href="#" class="text-black">Upload fil</a>
+								
+							</li>
+							
+							<li>
+								<a href="#" class="text-black">all shools</a>
 							</li>
 							<li>
-								<a href="#" class="text-white">About</a>
+								<a href="#" class="text-black">all departments</a>
 							</li>
 							<li>
-								<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-								<ul class="collapse list-unstyled text-white" id="pageSubmenu">
-									<li>
-										<a href="#" class="text-white">Page 1</a>
-									</li>
-									<li>
-										<a href="#" class="text-white">Page 2</a>
-									</li>
-									<li>
-										<a href="#" class="text-white">Page 3</a>
-									</li>
-								</ul>
+								<a href="#" class="text-black">Groups</a>
 							</li>
+							
 							<li>
-								<a href="#"class="text-white" >Portfolio</a>
+								<a href="#"class="text-black" >Group member</a>
 							</li>
+							
 							<li>
-								<a href="#" class="text-white">Contact</a>
+								<a href="#" class="text-black">Group roject</a>
 							</li>
-						</ul>
-					</nav>
-		</nav>
+							
+							<li>
+								<a href="#" class="text-black">Projects of 70-85% makrs</a>
+							</li>
+							
+							<li>
+								<a href="#" class="text-black">All projects done</a>
+							</li>
+							
+						</ul>   -->
+					</nav>  
+		<!-- </nav> -->
 	
 		<!-- Page Content -->
-		<div id="content">
-				<nav class="navbar navbar-expand-lg navbar-light bg-light">
-					<div class="container-fluid">
-			
-						<button type="button" id="sidebarCollapse" class="btn btn-info">
-							<i class="fas fa-align-left"></i>
-							<span>Toggle Sidebar</span>
-						</button>
-			
-					</div>
-				</nav>
+		<div class="tabs-content">
+			{% if messages %}
+			<div id="messages"
+				style="width: 80%; height: fit-content; color: green; background: lightgreen; margin-top: 50px; margin-left: 25px; padding: 20px; text-align: center; border-radius: 10px;">
+				{% for message in messages %}
+				{% if message.tags %} {% endif %} {{ message }}
+				{% endfor %}
 			</div>
-	
-	</div> 
+			{% endif %}
+           <div class="details" style="margin-left: 350px; margin-top: 100px;">
+			{% for rol in rols %}
+			{{rol.department_name}}</br>
+			{% endfor %}
 
-{% for project in projects %}
-<div class="card mr-5 mt-4 mb-4 ml-5">
-		
-		<div class="card-body">
-		  <h5 class="card-title mx-auto">{{project.project_title}}</h5>
-		  <p class="card-text">{{project.project_description}}</p>
-		  
+			{% for member in members %}
+			{{member.member_names}}
+			{% endfor %}</br>
+			{% for supervisor in supervisors %}
+			{{supervisor.supervisor_name}}
+			{% endfor %}</br>
+			{{user}}
+			</div>
 		</div>
-	  </div>
+		
+</div> 
 
-
-
-{% endfor %}
 
 {% endblock %}
+
+<!-- hhhhhhh -->

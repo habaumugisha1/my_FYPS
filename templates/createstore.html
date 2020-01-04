@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content  %}
+
+<div class="add-school"
+    style="width: 40%; padding: 10px; border: 1px solid rgb(87, 86, 86); border-radius: 12px; margin-left: 30%; float: center; margin-top: 40px; margin-right: 10%; margin-bottom: 30px;">
+
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{ form }} -->
+        <div class="form-group">
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control' }}
+                {% for error in field.errors %}
+                <span class="help-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg btn-block">Publish</button>
+    </form>
+</div>
+
+{% endblock %}

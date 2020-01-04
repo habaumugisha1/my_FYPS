@@ -1,0 +1,25 @@
+{% extends 'dashboardbase/princi.html' %}
+{% block content %}
+
+<div class="grid" style="display: row;">
+    <div class="school"
+        style="width: 50%; border: 1px solid rgb(87, 86, 86); overflow: hidden; color: black; border-radius: 12px; height: fit-content; margin-top: 20px; margin-left: 20%;padding:20px;">
+        <h6 class="text-muted"> There are <span class="badge badge-info">{{count}}</span> Schools in College of science
+            and technology</h6>
+        <hr>
+        {% for school in schools %}
+        <div>
+            <a href="{% url 'single_school' school.pk %}" class="stretched-link"
+                style="text-decoration: none; margin-left: 10%;">
+                {{school.school_name}}
+            </a>
+        </div>
+        <br>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

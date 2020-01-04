@@ -14,29 +14,46 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from accounts import views as accounts_views
+from accounts.views import login, profilepage, LoginView
 
 from depart import views
 
-urlpatterns = [
+urlpatterns = [   
     path('', views.homepage, name='home'),
+    path('chat/', include('chat.urls', namespace='chat')),
+    path('profile/', accounts_views.profilepage, name='profile'),
+    # path('accounts/', include('accounts.urls', namespace='accounts')),
     path('departments/', views.departmentPage, name='departments'),
     path('departments/<int:pk>/', views.department_details, name='department_details'),
-    path('addSupervisor/', views.addSupervisor, name='addsupervisor'),
+    path('addSupervisor/', views.addSupervisors, name='addsupervisor'),
     path('addProject/', views.addProject, name='addProject'),
     path('group/<int:pk>/', views.singleGroup, name='single_group'),
     path('group/<int:pk>/upload/', views.upload_file, name='upload_file'),
     path('group/<int:pk>/files/', views.file_list, name='file_list'),
     path('add_group/', views.create_group, name='add_group'),
     path('student_register/', accounts_views.userRegisterpage, name='register_students'),
-    #path('login/', accounts_views.login, name='login'),
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('staff_register/', accounts_views.staffRegister, name='register_staff'),
+    path('login/', accounts_views.LoginView, name='login'),
+    #path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    #path('account/login/', loginPage, name='login'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('add_department/', views.addDepartmentPage, name='add_departments'),
-    path('add_department_form_submission/', views.adddepartmentformsubmission, name='add_department_form_submission'),
+    path('supervisor_dashboard/', views.supervisor_dash, name='supervisor_dashboard'),
+    path('cordinator_dashboard/', views.cordinator_dash, name='cordinator_dashboard'),
+    path('lectucturor_dashboard/', views.lectucturor_dash, name='lectucturor_dashboard'),
+    path('principle_dashboard/', views.principle_dash, name='principle_dashboard'),
+    path('add_department/', views.adddepartment, name='add_departments'),
+    path('add_member/', views.add_member, name='add_membert'),
+    #path('add_department_form_submission/', views.adddepartmentformsubmission, name='add_department_form_submission'),
+    path('school/', views.schools, name='school'),
+    path('school/<int:pk>/', views.school_detail, name='single_school'),
+    path('addschool/', views.addschool, name='addschool'),
+    path('create_project_store/', views.add_project_in_store, name='create_project_store'),
  
     path('admin/', admin.site.urls),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+<!-- {% load widget_tweaks %} -->
+
+{% block content %}
+
+{% if messages %}
+<div id="messages"
+    style="width: 80%; height: fit-content; color: green; background: lightgreen; margin-top: 10px; margin-left: 25px; padding: 20px; text-align: center; border-radius: 10px;">
+    {% for message in messages %}
+    {% if message.tags %} {% endif %} {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="grid" style="display: row;">
+    <div class="school"
+        style="width: 50%; border: 1px solid rgb(87, 86, 86); overflow: hidden; color: black; border-radius: 12px; height: fit-content; margin-top: 20px; margin-left: 20%;padding:20px;">
+        <h6 class="text-muted"> There are <span class="badge badge-info">{{count}}</span> Departments in {{school.school_name}}</h6>
+        <a href="{% url 'add_departments' %}" class="btn btn-warning"
+            style="float: right; margin-right: 20px; color: green; margin-top: -33px; margin-bottom: 10px;">Add Department</a>
+        <hr>
+        {% for department in departments %}
+        <div>
+            <a href="{% url 'department_details' department.pk %}" class="stretched-link"
+                style="text-decoration: none; margin-left: 10%;">
+                Department: {{department.department_name}}
+            </a>
+        </div>
+        <br>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

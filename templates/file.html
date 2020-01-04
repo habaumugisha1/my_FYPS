@@ -1,24 +1,40 @@
-{% extends 'bases/dashboard.html' %}
+{% extends 'bases/filebase.html' %}
 {% load static %}  
         {% block content %}
-<h2>This is a list of Files available</h2>
-        <table class="table">
+
+        <!-- <nav aria-label="breadcrumb"
+          style="margin-left: 250px; margin-right: 150px; color: #0784F3; padding: 20px; margin-top: -48%;">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active "
+              style="text-align: center; color: #0784F3; margin-left: 30%; font-size: 30px;">This is a list of Files available in this Group:
+              <b>{{group.group_name}}</b></li>
+          </ol>
+        </nav> -->
+
+<h2 style="text-align: center; margin-top: 15px; font-family: 'Peralta', cursive; font-size: 35px; ">The files uploaded to
+  our Group: <b>{{groups.group_name}}</b></h2>
+  <p style="margin-left: 60px; margin-bottom: -10px;">
+    <a href="{% url 'upload_file' groups.pk %}" class="btn btn-primary"> Upload file</a>
+  </p>
+        <table class="table" style="margin-left: 60px; margin-right: 40px; margin-top: 30px; width: 80%;">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">File name</th>
                     <th scope="col">files</th>
+                    <th scope="col">sender</th>
                     
                   </tr>
                 </thead>
                 <tbody>
-                        {% for file in files %}
+                  {% for file in files %}
                   <tr>
                     <th scope="row">{{file.id}}</th>
-                    <td>{{file.file_name}}</td>
+                    <td>{{file.title}}<br><span class="text-muted">sended at {{file.created_at}}</span> </td>
                     <td>
-                        <a href="{{ url }}"> {{file.file}}</a>
-                        </td>
+                        <a href="{{ media.files.url }}" class="btn btn-success" target="blank"> Download PDF </a>
+                    </td>
+                    <td>{{file.sender}}</td>
                   </tr>
                   {% endfor %}
             
