@@ -1,0 +1,53 @@
+{% extends 'dashboardbase/lecture.html' %}
+{% block content %}
+<nav class="bg-dark text-white" id="sidebar"
+    style="width: 180px; margin-top: 0px; position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
+    <div class="bg-dark text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <h8> Department : {{user.profile.department_name}}</h8><br>
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
+    <ul class="list-unstyled components tabs" style="margin-bottom: 40px; text-decoration: none;">
+        <li>
+            <a href="#" class="text-black">Projects  fo greater 70% makrs</a>
+        </li>
+    </ul>
+
+</nav>
+
+{% for store in stores %}
+
+<div class="card"
+    style="padding: 20px; position: relative; float: right; width: 70%; margin-right: 25px; margin-top: -100vh; margin-bottom: 30px;">
+    <div class="card-header text-center">
+        <strong><a href="{% url 'single_project_store' store.pk %}">project name : {{store.project}}</a></strong>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> supervised by : {{store.supervisor}}</h5>
+        <p style="color: black;">
+           computer programming or technology used: {{store.technology}} <br>
+           category of this project : {{store.category}}<br><br>
+            groupmembers developed this project:<br>
+                  1. {{store.member_1}}<br>
+                  2. {{store.member_2}}<br>
+                   3. {{store.member_3}}<br><br>
+           period published :  {{store.years}}<br>
+           marks assigned : {{store.marks}}<br>
+           department included:  {{store.department}}<br>
+           school it founded in : {{store.school}}<br>
+            <a href="{{store.hosted_link}}" target="blank" style="color: cornflowerblue;">{{store.hosted_link}}</a><br>
+            <a href="{{ media.store.url }}" class="btn btn-warning" target="blank"> Download PDF </a><br><br>
+
+           <h5 class="card-link text-muted" style="position: relative; float: right; margin-right: 30px;"> Please leave comment by clicking on title details</h5>
+
+        </p>
+
+
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

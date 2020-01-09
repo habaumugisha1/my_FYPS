@@ -1,7 +1,57 @@
 {% extends 'dashboardbase/sup.html' %}
 
 {% block content %}
+<nav class="text-white" id="sidebar"
+    style="width: 200px; margin-top: 0px; background-color: rgb(0,128,128); position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
+    <div class="text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <h8> Department : {{user.profile.department_name}}</h8><br>
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
 
-<h2>this supervisor dashboard</h2>
+    </ul>
+
+</nav>
+
+{% for group in groups %}
+
+<div class="card"
+    style="padding: 20px; position: relative; float: right; width: 70%; margin-right: 25px; margin-top: -100vh;">
+    <!-- <div class="card-header text-center">
+        
+    </div> -->
+    <div class="card-body">
+         <h5 class="card-title" style="text-align: center;">GROUP I HAVE SUPERVISED AND CURRENTLY GROUP</h5><hr>
+        <!-- <p style="color: black;">
+            computer programming language ortechnology used :{{store.technology}} <br>
+            category of project : {{store.category}}<br><br>
+            group members:<br> 1 . {{store.member_1}}<br>
+            2 . {{store.member_2}}<br>
+            3 . {{store.member_3}}<br><br>
+            year published in : {{store.years}}<br>
+            The marks assigned : {{store.marks}}<br>
+            department : {{store.department}}<br>
+            school included : {{store.school}}<br>
+            
+
+            <a href="#" class="card-link text-muted">comment</a> -->
+            <a href="{% url 'single_group' group.pk %}" class="card-link" style="color: purple;">{{group.group_name}}</a>
+            <p style="position: relative; color: black; float: right; margin-right: 200px;">
+            {% for project in projects %}
+            {{project.project_title}}
+            {% endfor %}
+            </p>
+            <p style="position: relative; color: black; float: right; margin-right: 90px;">  {{group.created_at}} </p>
+            
+
+        </p>
+
+
+    </div>
+</div>
+
+{% endfor %}
 
 {% endblock %}

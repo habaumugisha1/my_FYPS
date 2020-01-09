@@ -1,9 +1,23 @@
 {% extends 'dashboardbase/princi.html' %}
 {% block content %}
 
-<div class="grid" style="display: row;">
+<nav class="bg-dark text-white" id="sidebar"
+    style="width: 180px; margin-top: 0px; position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
+    <div class="bg-dark text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <!-- <h8> Department : {{user.profile.department_name}}</h8><br> -->
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
+
+    </ul>
+
+</nav>
+
+<div class="grid" style="display: row; width: 75%; margin-left: 300px; position: relative; float: left; margin-top: -100vh;">
     <div class="school"
-        style="width: 50%; border: 1px solid rgb(87, 86, 86); overflow: hidden; color: black; border-radius: 12px; height: fit-content; margin-top: 20px; margin-left: 20%;padding:20px;">
+        style="width: 60%; position: relative; float: left;   overflow: hidden; margin-top: -20px; color: black; border-radius: 12px; height: fit-content; margin-top: 20px;padding:20px;">
         <h6 class="text-muted"> There are <span class="badge badge-info">{{count}}</span> Schools in College of science
             and technology</h6>
         <hr>
@@ -18,6 +32,19 @@
 
         {% endfor %}
 
+    </div>
+
+    <div class="card bg-light mb-3" style="max-width: 30rem; float: right; margin-right: 0px;">
+        <div class="card-header" style="text-align: center;">SUMMARY</div>
+        <div class="card-body">
+            <h5 class="card-title"><span class="badge badge-primary" style="border-radius: 50%;">{{depcount}}</span> available Departments</h5>
+            <h5 class="card-title"><span class="badge badge-success" style="border-radius: 50%;">{{supcount}}</span> working Supervisors</h5>
+            
+        </div>
+        <div class="card-body">
+            <h4 style="color: blueviolet;">As this position need <br>more information</h4><hr style="background-color: blueviolet;">
+            <h5 class="card-title" style="font-family: 'Peralta', cursive;"> For more about each school <br>click on school's title <br>or name and get all about it</h5>
+        </div>
     </div>
 
 </div>

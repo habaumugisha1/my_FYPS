@@ -14,13 +14,12 @@
     </ul>
 
 </nav>
-<h2>this lecture dashboard</h2>
 
 {% for store in stores %}
 
 <div class="card" style="padding-top: 20px; position: relative; float: right; width: 70%; margin-right: 25px; margin-top: -110vh;">
     <div class="card-header text-center">
-       <strong> {{store.project}}</strong>
+    <strong><a href="{% url 'single_project_store' store.pk %}">project name : {{store.project}}</a></strong>
     </div>
     <div class="card-body">
         <h5 class="card-title">{{store.supervisor}}</h5>

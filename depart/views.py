@@ -8,13 +8,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Files 
-from depart.forms import AddGroupForm, FileForm, AddDepartmentForm, AddMemberForm, AddSupervisorForm, AddProjectForm, SchoolForm, AddToStoreForm
+from depart.forms import AddGroupForm, FileForm, AddDepartmentForm, AddMemberForm, AddSupervisorForm, AddProjectForm, SchoolForm, AddToStoreForm, AddCommentForm
 from django.core.files.storage import FileSystemStorage
 from accounts.models import UserProfile
-from depart.models import School, Department, Project, Supervisor, Group, Member, Progress, Files, ProjectStore
+from depart.models import School, Department, Project, Supervisor, Group, Member, Progress, Files, ProjectStore, Comments
 # Create your views here.
-def homepage(request): 
-    return render(request, 'home.html')
+def homepage(request):
+    user = User.objects.all() 
+    return render(request, 'home.html', {'user':user})
 
 
 def schools(request):
@@ -24,25 +25,58 @@ def schools(request):
 
 def school_detail(request, pk, *args, **kwargs):
     group = Group.objects.get(pk=pk)
+    groups = Group.objects.all()
+    user = User.objects.get(pk=pk)
+    member = Member.objects.get(pk=pk)
+    members = Member.objects.all()
     count = Department.objects.filter(school=pk).count()
     departments = Department.objects.filter(school=pk)
-    if request.user.profile.role == 'student':
-        # return HttpResponseRedirect(reverse('single_group'))
-        return redirect('single_group', pk=group.pk)
-    # elif request.user.profile.role == 'HOD':
-    #     return redirect('epartment_details', departments.pk)
-
-
+    department = Department.objects.get(pk=pk)
     school = School.objects.get(pk=pk)
+    if request.user.profile.role == 'student':
+        if request.user.profile.department_name == department:
+            if group in groups:
+                if member.group==group:
+                    # if request.user.is_authenticated == member.reg_number:
+                    return redirect('all_groups', department.pk)
+                    # else:
+                    #     return HttpResponse("<h1 style='color=red;'>user name is not the same as your reg number </h1>")
+                else:
+                    return HttpResponse("<h1 style='color=red;'>You are not a member of any group</h1>")
+
+            else:
+                return HttpResponse("<h1 style='color=red;'>You don't have <b>Group</b>. Please contact your HOD.</h1>")
+        else:
+            return HttpResponse("<h1 style='color=red;'>This is not your <b>Department</b></h1>")
+        
+    elif request.user.profile.role == 'HOD':
+        if request.user.profile.department_name == department:
+            return redirect('department_details', pk=department.pk)
+        else:
+            return HttpResponse("<h1 style='color=red;'>This is not your <b>Department</b></h1>")
+    elif request.user.profile.role == 'supervisor':
+        if request.user.profile.department_name == department:
+            return redirect('supervisor_dashboard', pk=department.pk)
+        else:
+            return HttpResponse("<h1 style='color=red;'>Kindly, Your department is not in this school you are trying to access</h1>")
+    elif request.user.profile.role == 'dean':
+        if school:
+            pass
+        else:
+            return HttpResponse("<h1 style='color=red;'>Kindly, This is not your <b>school</b></h1>")
+
+
     context = {
         'school':school,
         'count':count,
+        'member':member,
         'departments':departments
          }
 
     return render(request, 'school_detail.html', context )
 
 def addschool(request):
+    user = User.objects.all()
     if request.method == 'POST':
         form = SchoolForm(request.POST)
         user = User.objects.first()
@@ -55,7 +89,7 @@ def addschool(request):
     else:
       form = SchoolForm(initial = {})
 
-    return render(request, 'addschool.html', {'form': form})
+    return render(request, 'addschool.html', {'form': form, 'user':user})
 
 
 def departmentPage(request):
@@ -68,6 +102,7 @@ def departmentPage(request):
 #     return render(request, 'department.html') 
 
 def adddepartment(request):
+    user = User.objects.all()
     # school= School.objects.get(pk=pk)
     if request.method == 'POST':
         form = AddDepartmentForm(request.POST)
@@ -78,9 +113,10 @@ def adddepartment(request):
     else:
         form = AddDepartmentForm()
 
-    return render(request, 'add_department.html', {'form': form})
+    return render(request, 'add_department.html', {'form': form, 'user':user})
 
 def add_member(request):
+    user = User.objects.all()
     if request.user.profile.role =='HOD':
         if request.method =='POST':
             form = AddMemberForm(request.POST)
@@ -93,7 +129,7 @@ def add_member(request):
     else:
         return HttpResponse("<h1 style='color=red;'>You are not allowed to to add members. so, turn back</h1>")
 
-    return render(request, 'addmember.html', {'form':form})
+    return render(request, 'addmember.html', {'form':form, 'user':user})
 
 
 
@@ -157,26 +193,61 @@ def create_group(request):
 
     return render(request, 'addgroup.html', {'form':form})
 
+def group(request, pk, *args, **kwargs):
+    departments = Department.objects.filter(school=pk)
+    groups = Group.objects.filter(department=pk)
+    group = Group.objects.get(pk=pk)
+    members = Member.objects.filter(group=pk)
+    # if request.user.profile.department_name == members.reg_number:
+    #     print(members.group)
+    # else:
+    #     print('bad request!!')
+    
+    # print(members.group)
+
+    return render(request, 'allgroups.html', {'groups':groups, 'departments':departments})
 
 def singleGroup(request, pk, *args, **kwargs):
     group = Group.objects.get(pk=pk)
     projects = Project.objects.filter(group_id=pk)
     supervisors = Supervisor.objects.filter(group=pk)
     members = Member.objects.filter(group=pk)
+    member = Member.objects.get(pk=pk)
     progress = Progress.objects.all()
-    context = { 
-        'projects':projects,
+    if request.user.profile.role== 'student':
+        if request.user.profile.reg_number == member.reg_number:
+            pass
+            print('next!')
+        else:
+            print('not allowed')
+            return HttpResponse("<h1 style='color=red;'>kindly access only your group </h1>")
+
+    else:
+        pass
+    
+    # print(member.reg_number)
+        # if member in members:
+        # if member.reg_number==request.user.username:
+        #     return redirect('single_group', pk=group.pk)           
+        # else:
+        #     print(member.reg_number)
+        #     print(request.user.username)
+        #     return HttpResponse("<h1 style='color=red;'>user name is not the same as your reg number </h1>")
+        # else:
+        #     return HttpResponse("<h1 style='color=red;'>You are not a member </h1>")
+
+    context = {
+        'projects': projects,
         'supervisors': supervisors,
         'group': group,
-        'members':members,
+        'members': members,
         'progress': progress
-        }
-       
+    }
     return render(request, 'group.html', context=context)
 
-def addSupervisors(request, pk, *args, **kwargs):
+def addSupervisors(request):
     if request.user.profile.role == 'HOD':
-        department = Department.objects.get(pk=pk)
+        # department = Department.objects.get(pk=pk)
         if request.method == 'POST':
             form = AddSupervisorForm(request.POST)
             if form.is_valid():
@@ -191,7 +262,7 @@ def addSupervisors(request, pk, *args, **kwargs):
         # form =AddSupervisorForm()
         return HttpResponse("<h1>You are not allowed to access this resource</h1>")
 
-    return render(request, 'addsup.html', {'form': form, 'department': department})
+    return render(request, 'addsup.html', {'form': form})
 
 def addProject(request):
     if request.user.profile.role == 'HOD':
@@ -201,7 +272,7 @@ def addProject(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Project successful added to group')
-                return HttpResponseRedirect(reverse('departments'))
+                return HttpResponseRedirect(reverse('school'))
             
         else:
             form =AddProjectForm()
@@ -213,7 +284,7 @@ def addProject(request):
 
 
 @login_required()
-def dashboard(request, *args, **kwargs):
+def dashboard(request, pk, *args, **kwargs):
     if request.user.profile.role=='student':
         count = School.objects.count()
         schools = School.objects.all()
@@ -243,8 +314,14 @@ def dashboard(request, *args, **kwargs):
         return HttpResponse("<h1 style='color=red;'>You are not allowed to access this resource</h1>")
     return render(request, 'dashboard.html', context=context)
 
-def supervisor_dash(request):
-    context={}
+def supervisor_dash(request, pk, *args, **kwargs):
+    projects = Project.objects.filter(group_id=pk) 
+    groups = Group.objects.filter(supervisor=pk)
+    context={
+     'groups':groups,
+     'projects':projects
+
+    }
     return render(request, 'dashboard/sup_dash.html', context=context)
 
 def cordinator_dash(request):
@@ -260,13 +337,19 @@ def lectucturor_dash(request):
 def principle_dash(request):
     count = School.objects.count()
     schools = School.objects.all()
+
     departments = Department.objects.all()
     depcount = Department.objects.count()
+
+    supervisors = UserProfile.objects.filter(role='supervisor')
+    supcount = UserProfile.objects.filter(role='supervisor').count()
     context={
         'departments':departments,
         'depcount':depcount,
         'schools': schools,
-        'count': count
+        'count': count,
+        'supervisors':supervisors,
+        'supcount': supcount
 
     }
     return render(request, 'dashboard/principle_dash.html', context=context)
@@ -286,9 +369,37 @@ def add_project_in_store (request):
     }
     return render (request, 'createstore.html', context=context)
 
+def project_store(request):
+    stores = ProjectStore.objects.all()
+    context= {
+        'stores':stores
+    }
+    return render(request, 'project_store.html', context=context)
 
+def single_project_store(request, pk):
+    store = ProjectStore.objects.get(pk=pk)
+    comments= Comments.objects.filter(project=pk)
+    commentscount =Comments.objects.filter(project=pk).count()
+    context= {
+        'store':store,
+        'comments':comments,
+        'commentscount': commentscount
+    }
+    return render(request, 'single_project_store.html', context=context)
 
-
-
-
+@login_required
+def comment(request, pk):
+    store = ProjectStore.objects.get(pk=pk)
+    if request.method =='POST':
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('single_project_store', pk=store.pk)
+    else:
+        form = AddCommentForm()
+    context = {
+        'store': store,
+        'form':form
+    }
+    return render(request, 'comment.html', context=context)
 

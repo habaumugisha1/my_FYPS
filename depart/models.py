@@ -21,24 +21,25 @@ class Department(models.Model):
         return self.department_name
 
 
+class Supervisor(models.Model):
+    department_id = models.ForeignKey(Department, related_name = 'supervisors', on_delete = models.CASCADE)
+    supervisor_name = models.CharField(max_length=250, null=True)
+    supervisor_email = models.EmailField(max_length=250)
+
+    def __str__(self):
+        return self.supervisor_name
 
 class Group(models.Model):
     department = models.ForeignKey(Department, related_name='group', on_delete = models.CASCADE)
     group_name = models.CharField(max_length=50)
+    supervisor = models.ForeignKey(Supervisor, related_name='group', on_delete=models.CASCADE)
     group_email = models.EmailField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.group_name
         # 'Group: {} {} {} {}'.format(self.department, self.supervisor, self.group_name, self.group_email)
 
-class Supervisor(models.Model):
-    department_id = models.ForeignKey(Department, related_name = 'supervisors', on_delete = models.CASCADE)
-    supervisor_name = models.CharField(max_length=250, null=True)
-    group  = models.ForeignKey(Group, related_name='supervisor', on_delete=models.CASCADE, blank=True, null=True)
-    supervisor_email = models.EmailField(max_length=250)
-
-    def __str__(self):
-        return self.supervisor_name
 
 class Member(models.Model):
     reg_number = models.IntegerField()
@@ -65,10 +66,6 @@ class Project(models.Model):
     def __str__(self):
         return self.project_titletext
 
-# class Message(models.Model):
-#     message_content = models.CharField(max_length=300)
-#     def __str__(self):
-#         return self.message_content
 
 class Files(models.Model):
     # message_id = models.ForeignKey(Message, related_name='file', on_delete = models.CASCADE, default=1)
@@ -94,13 +91,13 @@ class ProjectStore(models.Model):
     member_1 = models.CharField(max_length=100)
     member_2 = models.CharField(max_length=100)
     member_3 = models.CharField(max_length=100)
-    supervisor = models.CharField(max_length=100)
+    supervisor = models.ForeignKey(Supervisor, related_name='projectstore', on_delete=models.CASCADE)
     marks = models.CharField(max_length=50)
     years = models.CharField(max_length=50)
     school = models.ForeignKey(School, related_name='projectstore', on_delete=models.CASCADE)
     department = models.ForeignKey(Department, related_name='projectstore', on_delete=models.CASCADE)
     hosted_link = models.URLField(max_length=128, unique=True, blank=True)
-    stored_on = models.DateTimeField()
+    stored_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.project
@@ -109,7 +106,7 @@ class Comments(models.Model):
     project = models.ForeignKey(ProjectStore, related_name='comments', on_delete=models.CASCADE)
     comment = models.TextField()
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    commented_on = models.DateTimeField(default=timezone.now)
+    commented_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.comment

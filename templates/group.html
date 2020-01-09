@@ -23,7 +23,7 @@
   							</li>
   							
   							<li>
-  							<a href="{% url 'upload_file' group.pk %}" class="text-black">Upload fil</a>
+  							<a href="{% url 'upload_file' group.pk %}" class="text-black"><i class="fa fa-paper-plane" aria-hidden="true"></i>Upload fil</a>
   								
   							</li>
   							
@@ -31,8 +31,9 @@
   								<a href="#" class="text-black">Projects of 70-85% makrs</a>
   							</li>
   							
-  							<li>
-  								<a href="#" class="text-black">All projects done</a>
+  							<li> 
+                  <a class="nav-link" href="{% url 'project_in_store' %}"> All Projects Done</a>
+
   							</li>
   							
   						</ul>  
@@ -41,7 +42,7 @@
 
 <nav aria-label="breadcrumb" style="margin-left: 250px; margin-right: 150px; color: lightseagreen; padding: 20px; margin-top: -52%;">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active " style="text-align: center; color: lightseagreen; margin-left: 30%; font-size: 30px;">Welcome to our Group: <b>{{group.group_name}}</b></li>
+    <li class="breadcrumb-item active " style="text-align: center; color: lightseagreen; margin-left: 30%; font-size: 30px;">Welcome to our Group: <b>FYPS&M system</b></li>
   </ol>
 </nav>
   
@@ -72,14 +73,14 @@
       Email : {{member.member_email}}<br>
       Tel : {{member.member_phone_number}}<br><br>
       {% endfor %}</p>
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      <a href="{% url 'add_membert' %}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>Add member</a>
     </div>
   </div>
 
   
-  <div class="card " style="width: 35rem; position: relative; float: right; margin-right: 50px; margin-top: -75%;">
+  <div class="card " style="width: 35rem; position: relative; float: right; margin-right: 50px; margin-top: -50%;">
     <div class="card-body">
-      <h5 class="card-title">Group's project</h5>
+      <h5 class="card-title">Group's project {{project_title}}</h5>
       <hr>
   
       <p class="card-text" style="color: black;">

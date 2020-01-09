@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 # from simple_forms.apps.core.models import Userprofile, Group
-from .models import School, Department, Group, Files, Supervisor, Project, Member, ProjectStore
+from .models import School, Department, Group, Files, Supervisor, Project, Member, ProjectStore, Comments
 from accounts.models import UserProfile
 
 # class UserprofileForm(UserCreationForm):
@@ -28,7 +28,7 @@ class AddDepartmentForm(forms.ModelForm):
 class AddGroupForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ('department', 'group_name', 'group_email')
+        fields = ('department', 'group_name', 'supervisor', 'group_email')
 
 
 class FileForm(forms.ModelForm):
@@ -40,7 +40,7 @@ class AddSupervisorForm(forms.ModelForm):
     supervisor_name = UserProfile.role == 'S'
     class Meta:
         model = Supervisor
-        fields = ('department_id', 'supervisor_name', 'group', 'supervisor_email')
+        fields = ('department_id', 'supervisor_name', 'supervisor_email')
 
 
 class AddProjectForm(forms.ModelForm):
@@ -59,3 +59,8 @@ class AddToStoreForm(forms.ModelForm):
         model = ProjectStore
         fields = ('project', 'description', 'technology',
                    'category', 'member_1', 'member_2', 'member_3', 'supervisor', 'marks', 'years', 'school', 'department', 'hosted_link')
+
+class AddCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ('project', 'comment', 'sender')

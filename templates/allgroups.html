@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{%block content%}
+
+<nav class="bg-dark text-white" id="sidebar"
+    style="width: 100px; margin-top: 5px; position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 10px;">
+    <div class="bg-dark text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <h8> Department : {{user.profile.department_name}}</h8><br>
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
+    <ul class="list-unstyled components tabs" style="margin-bottom: 40px; text-decoration: none;">
+
+       
+
+    </ul>
+
+</nav>
+
+<nav aria-label="breadcrumb"
+    style="margin-left: 250px; margin-right: 150px; color: lightseagreen; padding: 20px; margin-top: -52%;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active "
+            style="text-align: center; color: lightseagreen; margin-left: 30%; font-size: 30px;">Welcome to our Group:
+            <b>{{group.group_name}}</b></li>
+    </ol>
+</nav>
+
+<div class="card " style="width: 25rem; margin-left: 270px;">
+    <div class="card-body">
+        <h5 class="card-title">Supervisor of this group</h5>
+        <hr>
+
+        <p class="card-text" style="color: black;">
+            {% for group in groups %}
+            <a href="{% url 'single_group' group.pk %}" class="btn btn-link">{{group.group_name}} </a><br>
+            {% endfor %}
+        </p>
+    </div>
+</div><br><br>
+
+<!-- <div class="card" style="width: 25rem; margin-left: 270px; margin-bottom: 30px;">
+    <div class="card-header">
+        Group Members
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-center">project developers</h5>
+        <hr>
+        <p class="card-text" style="color: black;">
+            {% for member in members %}
+            Registration Number : {{member.reg_number}}<br>
+            Names : {{member.member_names}}<br>
+            Email : {{member.member_email}}<br>
+            Tel : {{member.member_phone_number}}<br><br>
+            {% endfor %}</p>
+        <a href="{% url 'add_membert' %}" class="btn btn-primary">Add member</a>
+    </div>
+</div>
+
+
+<div class="card " style="width: 35rem; position: relative; float: right; margin-right: 50px; margin-top: -68%;">
+    <div class="card-body">
+        <h5 class="card-title">Group's project {{project_title}}</h5>
+        <hr>
+
+        <p class="card-text" style="color: black;">
+            {% for project in projects %}
+            <h2>{{project.project_title}}</h2><br>
+            {{project.project_description|truncatewords:200}}<br>
+            <!-- {{supervisor.supervisor_email}}<br><br> -->
+            {% endfor %}
+        </p>
+    </div>
+</div><br><br> -->
+
+
+{% endblock %}

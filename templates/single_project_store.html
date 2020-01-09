@@ -1,0 +1,60 @@
+{% extends 'dashboardbase/lecture.html' %}
+{% block content %}
+<nav class="bg-dark text-white" id="sidebar"
+    style="width: 180px; margin-top: 0px; position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
+    <div class="bg-dark text-white">
+        <h5>Thanks {{ user.first_name }}</h5>
+        <h6> Your email : {{user.email}}</h6>
+        <h8> Department : {{user.profile.department_name}}</h8><br>
+        <h8> You are {{user.profile.role}}</h8>
+    </div>
+    <hr class="bg-white" />
+
+    </ul>
+
+</nav>
+
+
+
+<div class="card"
+    style="padding: 20px; position: relative; float: right; width: 70%; margin-right: 25px; margin-top: -100vh;">
+    <div class="card-header text-center">
+        project title : <strong> {{store.project}}</strong>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> supervised by : {{store.supervisor}}</h5>
+        <p style="color: black;">
+           computer language used : {{store.technology}} <br>
+           category of this project : {{store.category}}<br>
+            
+           year of time published : {{store.years}}<br>
+        
+            department included : {{store.department}}<br>
+            
+             you can visit this link and get how it work : <br> <a href="{{store.hosted_link}}" target="blank" style="color: cornflowerblue;">{{store.hosted_link}}</a><br><br>
+            <a href="{{ media.store.url }}" class="btn btn-warning" target="blank"> Download PDF </a><br><br>
+
+            <span class="badge badge-success" style="border-radius: 50%;">{{commentscount}} </span>comments; <a href="{% url 'comment' store.pk %}" class="card-link text-muted"> leave your comment here</a>
+
+
+        </p>
+    </div>
+        {% for comment in comments %}
+        <div class="card-body" style="border-bottom: 1px solid gray; margin-bottom: 20px; margin-left: 180px; margin-right: 50px; box-shadow: 
+       inset 0 -3em 3em rgba(0,0,0,0.1), 
+             0 0  0 2px rgb(255,255,255),
+             0.3em 0.3em 1em rgba(0,0,0,0.3);">
+             
+            <h5 class="card-title">{{comment.sender}}</h5>
+            <h8 class="card-title text-muted ml-4">{{comment.commented_on}}</h8>
+            <p style="color: black;">
+                {{comment.comment}}<br>
+            </p>
+
+        </div>
+        {% endfor %}
+</div>
+
+
+
+{% endblock %}

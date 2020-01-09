@@ -52,7 +52,7 @@
               {% for group in groups %}
               <tr>
                 <th scope="row">{{group.id}}</th>
-                <td> <a href="{%url 'single_group' group.pk %}" class="btn btn-link">{{group.group_name}} </a></td>
+                <td> <a href="{%url 'single_group' group.pk %}" class="btn btn-link">{{group.group_name}} </a> <a href="{% url 'add_membert' %}" class="btn btn-warning mr-4">Add member</a></td>
               </tr>
               {% endfor %} 
             </tbody>

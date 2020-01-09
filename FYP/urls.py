@@ -32,6 +32,7 @@ urlpatterns = [
     path('departments/<int:pk>/', views.department_details, name='department_details'),
     path('addSupervisor/', views.addSupervisors, name='addsupervisor'),
     path('addProject/', views.addProject, name='addProject'),
+    path('departments/<int:pk>/group/', views.group, name='all_groups'),
     path('group/<int:pk>/', views.singleGroup, name='single_group'),
     path('group/<int:pk>/upload/', views.upload_file, name='upload_file'),
     path('group/<int:pk>/files/', views.file_list, name='file_list'),
@@ -43,7 +44,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     #path('account/login/', loginPage, name='login'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('supervisor_dashboard/', views.supervisor_dash, name='supervisor_dashboard'),
+    path('departments/<int:pk>/supervisor_dashboard/', views.supervisor_dash, name='supervisor_dashboard'),
     path('cordinator_dashboard/', views.cordinator_dash, name='cordinator_dashboard'),
     path('lectucturor_dashboard/', views.lectucturor_dash, name='lectucturor_dashboard'),
     path('principle_dashboard/', views.principle_dash, name='principle_dashboard'),
@@ -54,6 +55,34 @@ urlpatterns = [
     path('school/<int:pk>/', views.school_detail, name='single_school'),
     path('addschool/', views.addschool, name='addschool'),
     path('create_project_store/', views.add_project_in_store, name='create_project_store'),
+    path('project_in_store/', views.project_store, name='project_in_store'),
+    path('single_project_store/<int:pk>/', views.single_project_store, name='single_project_store'),
+    path('single_project_store/<int:pk>/comment',
+         views.comment, name='comment'),
+
+    path('reset/',
+         auth_views.PasswordResetView.as_view(
+             template_name='registration/password_reset.html',
+             email_template_name='registration/password_reset_email.html',
+             subject_template_name='registration/password_reset_subject.txt'
+         ),
+         name='password_reset'),
+
+    path('reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='registration/password_reset_done.html'),
+         name='password_reset_done'),
+
+    path('reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='registration/password_reset_confirm.html'),
+         name='password_reset_confirm'),
+
+    path('reset/complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='registration/password_reset_complete.html'),
+         name='password_reset_complete'),
  
     path('admin/', admin.site.urls),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

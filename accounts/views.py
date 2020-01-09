@@ -8,10 +8,13 @@ from django.contrib.auth import ( authenticate, login, logout)
 from django.shortcuts import render, redirect, reverse
 from depart.models import Department
 from accounts.models import UserProfile
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import UserprofileForm, StaffRegisterForm, UserLoginForm, ProfileForm
+from depart.models import School, Department, Project, Supervisor, Group, Member, Progress, Files, ProjectStore, Comments
+
 
 
 # Create your views here.
@@ -94,7 +97,7 @@ def staffRegister(request):
 
 def profilepage(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Thanks profile added successfuly!!')
@@ -107,8 +110,7 @@ def profilepage(request):
 
       
 def LoginView(request, *args, **kwargs):
-    # department = Department.objects.get(pk) 
-    # context = {}
+   
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
@@ -118,7 +120,7 @@ def LoginView(request, *args, **kwargs):
 
             if user is not None:
                 login(request, user)
-                if user.profile.role == 'student':
+                if user.profile.role == 'student':                    
                     return HttpResponseRedirect(reverse("school"))
                 elif user.profile.role== 'HOD':
                     return HttpResponseRedirect(reverse("school"))
@@ -127,7 +129,7 @@ def LoginView(request, *args, **kwargs):
                 elif user.profile.role == 'lecturor':
                     return HttpResponseRedirect(reverse("lectucturor_dashboard"))
                 elif user.profile.role == 'supervisor':
-                    return HttpResponseRedirect(reverse("supervisor_dashboard"))
+                    return HttpResponseRedirect(reverse("school"))
                 elif user.profile.role == 'principle':
                     return HttpResponseRedirect(reverse("principle_dashboard"))
                 else:
@@ -140,7 +142,16 @@ def LoginView(request, *args, **kwargs):
             form = AuthenticationForm()
     else:
         form = AuthenticationForm()
-    return render(request, 'accounts/login.html', {'form':form})
+    
+    context = {
+        'form':form,
+        # 'school':school,
+        # 'count':count,
+        # 'member':member,
+        # 'departments':departments
+         }
+
+    return render(request, 'accounts/login.html', context=context)
 
             
         

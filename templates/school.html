@@ -13,7 +13,7 @@
 </div>
 {% endif %}
 
-<div class="grid" style="display: row;">
+<!-- <div class="grid" style="display: row;">
     <div class="school"
         style="width: 50%; border: 1px solid rgb(87, 86, 86); overflow: hidden; color: black; border-radius: 12px; height: fit-content; margin-top: 20px; margin-left: 20%;padding:20px;">
         <h6 class="text-muted"> There are <span class="badge badge-info">{{count}}</span> Schools in College of science and technology</h6> 
@@ -22,7 +22,34 @@
         <hr>
         {% for school in schools %}
         <div>
-            <a href="{% url 'single_school' school.pk %}" class="stretched-link" style="text-decoration: none; margin-left: 10%;">
+            <a href="{% url 'single_school' school.pk %}" class="stretched-link" style="text-decoration: none; margin-left: 10%;"> 
+                {{school.school_name}}
+                
+            </a>
+        </div>
+        <br>
+
+        {% endfor %}
+
+    </div>
+
+    
+
+</div> -->
+
+<div class="grid"
+    style="display: row; width: 75%; border: 1px solid rgb(87, 86, 86); margin-left: 150px; margin-top: 30px; position: relative; float: left; border-radius: 12px;">
+    <div class="school"
+        style="width: 60%; position: relative; float: left;   overflow: hidden; margin-top: -20px; color: black; border-radius: 12px; height: fit-content; margin-top: 20px;padding:20px;">
+        <h6 class="text-muted"> There are <span class="badge badge-info">{{count}}</span> Schools in College of science
+            and technology</h6>
+            <a href="{% url 'addschool' %}" class="btn btn-warning"
+                style="float: right; margin-right: 5px; color: green; margin-top: -33px; margin-bottom: 10px;"><i class="fa fa-plus" aria-hidden="true"></i> Add School</a>
+        <hr>
+        {% for school in schools %}
+        <div>
+            <a href="{% url 'single_school' school.pk %}" class="stretched-link"
+                style="text-decoration: none; margin-left: 10%;">
                 {{school.school_name}}
             </a>
         </div>
@@ -30,6 +57,23 @@
 
         {% endfor %}
 
+    </div>
+
+    <div class="card bg-light mb-6" style="max-width: 30rem; float: right; margin-right: 0px;">
+        <div class="card-header" style="text-align: center;">About this page</div>
+        <!-- <div class="card-body">
+            <h5 class="card-title"><span class="badge badge-primary" style="border-radius: 50%;">{{depcount}}</span>
+                available Departments</h5>
+            <h5 class="card-title"><span class="badge badge-success" style="border-radius: 50%;">{{supcount}}</span>
+                working Supervisors</h5>
+
+        </div> -->
+        <div class="card-body">
+            <h4 style="color: blueviolet;">As Everyoen need <br>more information</h4>
+            <hr style="background-color: blueviolet;">
+            <h5 class="card-title" style="font-family: 'Peralta', cursive;"> For more about each school <br>click on
+                school's title <br>or name and get all about <br>it according to your activity<br> in in any school,<br> by the way, do not loose<br> your time by accessing <br>a schoolthat you are not includithis<br> positionng and rember that,<br> time is <b>Money</br>. <br>thanks, UR regard </h5>
+        </div>
     </div>
 
 </div>
