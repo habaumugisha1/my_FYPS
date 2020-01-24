@@ -34,20 +34,21 @@ def school_detail(request, pk, *args, **kwargs):
     department = Department.objects.get(pk=pk)
     school = School.objects.get(pk=pk)
     if request.user.profile.role == 'student':
-        if request.user.profile.department_name == department:
-            if group in groups:
-                if member.group==group:
-                    # if request.user.is_authenticated == member.reg_number:
-                    return redirect('all_groups', department.pk)
-                    # else:
-                    #     return HttpResponse("<h1 style='color=red;'>user name is not the same as your reg number </h1>")
-                else:
-                    return HttpResponse("<h1 style='color=red;'>You are not a member of any group</h1>")
+        for department in departments:
+            if request.user.profile.department_name == department:
+                if group in groups:
+                    if member.group==group:
+                        # if request.user.is_authenticated == member.reg_number:
+                        return redirect('all_groups', department.pk)
+                        # else:
+                        #     return HttpResponse("<h1 style='color=red;'>user name is not the same as your reg number </h1>")
+                    else:
+                        return HttpResponse("<h1 style='color=red;'>You are not a member of any group</h1>")
 
+                else:
+                    return HttpResponse("<h1 style='color=red;'>You don't have <b>Group</b>. Please contact your HOD.</h1>")
             else:
-                return HttpResponse("<h1 style='color=red;'>You don't have <b>Group</b>. Please contact your HOD.</h1>")
-        else:
-            return HttpResponse("<h1 style='color=red;'>This is not your <b>Department</b></h1>")
+                return HttpResponse("<h1 style='color=red;'>This is not your <b>Department</b></h1>")
         
     elif request.user.profile.role == 'HOD':
         if request.user.profile.department_name == department:
@@ -55,10 +56,11 @@ def school_detail(request, pk, *args, **kwargs):
         else:
             return HttpResponse("<h1 style='color=red;'>This is not your <b>Department</b></h1>")
     elif request.user.profile.role == 'supervisor':
-        if request.user.profile.department_name == department:
-            return redirect('supervisor_dashboard', pk=department.pk)
-        else:
-            return HttpResponse("<h1 style='color=red;'>Kindly, Your department is not in this school you are trying to access</h1>")
+        for department in departments:
+            if request.user.profile.department_name == department:
+                return redirect('supervisor_dashboard', pk=department.pk)
+            else:
+                return HttpResponse("<h1 style='color=red;'>Kindly, Your department is not in this school you are trying to access</h1>")
     elif request.user.profile.role == 'dean':
         if school:
             pass
@@ -314,12 +316,19 @@ def dashboard(request, pk, *args, **kwargs):
         return HttpResponse("<h1 style='color=red;'>You are not allowed to access this resource</h1>")
     return render(request, 'dashboard.html', context=context)
 
+    
 def supervisor_dash(request, pk, *args, **kwargs):
+    supervisors = Supervisor.objects.filter(department_id=pk)
+    for supervisor in supervisors:        
+        supervisor = Supervisor.objects.get(pk=pk)
+
     projects = Project.objects.filter(group_id=pk) 
-    groups = Group.objects.filter(supervisor=pk)
+    groups = Group.objects.filter(supervisor=supervisor)
+    print(supervisor)
     context={
      'groups':groups,
-     'projects':projects
+     'projects':projects,
+     'supervisors': supervisors
 
     }
     return render(request, 'dashboard/sup_dash.html', context=context)

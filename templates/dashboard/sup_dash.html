@@ -4,10 +4,11 @@
 <nav class="text-white" id="sidebar"
     style="width: 200px; margin-top: 0px; background-color: rgb(0,128,128); position: relative; height:fit-content; padding:20px; margin-bottom: 40px; margin-left: 0px;">
     <div class="text-white">
+       <p style="border-radius: 50%;"> {{user.image}}</p>
         <h5>Thanks {{ user.first_name }}</h5>
         <h6> Your email : {{user.email}}</h6>
         <h8> Department : {{user.profile.department_name}}</h8><br>
-        <h8> You are {{user.profile.role}}</h8>
+        You are <h2 style="color: rgb(233, 32, 99);"> {{user.profile.role}}</h2>
     </div>
     <hr class="bg-white" />
 

@@ -37,7 +37,7 @@ def userRegisterpage(request):
                 # some_html_message="""<h1>hi!</h1>"""
                 #auth_login(request, user)
                 user.save()
-                print(message)
+                # print(message)
                 # socket.gethostbyname("smtp.gmail.com")
                 send_mail(
                     subject,
@@ -47,7 +47,7 @@ def userRegisterpage(request):
                     fail_silently=True
                 )
                 # send_mail.send()
-                print(send_mail)
+                # print(send_mail)
                 messages.success(request, 'Account created successfully')
                 return HttpResponseRedirect (reverse('profile'))
                 # return redirect('single_group')
@@ -72,10 +72,10 @@ def staffRegister(request):
                 first_name = form.cleaned_data.get('first_name')
                 user = form.save(commit=False)
                 subject = 'Registered on UR Final year project suprevision and management.'
-                message = "Hi %s!, You have registered on UR Final year project suprevision and management. Your username is %s that you will using to log in and passwword is %s , please login after 30 minutes after receiving this email and change your password. thanks UR regards." % (
+                message = "Hi <b>%s</b>!, You have registered on UR Final year project suprevision and management. Your username is <b>%s</b> that you will using to log in and passwword is <b>%s</b>, please login after 30 minutes after receiving this email and change your password. thanks UR regards." % (
                     first_name, username, password)
                 #auth_login(request, user)
-                print(subject, message)
+                # print(subject, message)
                 form.save()
                 send_mail(
                     subject,
@@ -84,7 +84,7 @@ def staffRegister(request):
                     [email],
                     fail_silently=True
                 )
-                print(send_mail)
+                # print(send_mail)
                 messages.success(request, 'Account created successfully')
                 return HttpResponseRedirect(reverse('profile'))
                 # return redirect('single_group')
